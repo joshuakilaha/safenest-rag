@@ -1,13 +1,19 @@
-from django.shortcuts import render
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .services.rag_pipeline import simple_response
+
+from .services.retrieval import retrieve_documents
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 def chat(request):
-    """Handle chat requests and return responses."""
-    query = request.data.get("query")
-    answer = simple_response(query)
-    return Response({"answer": answer})
+    query = request.data.get("query", "").strip()
+
+    if not query:
+        return Response({"error": "Query is required."}, status=400)
+
+    results = retrieve_documents(query, k=3)
+
+    return Response({
+        "query": query,
+        "results": results,
+    })
