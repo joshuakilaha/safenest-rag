@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .services.retrieval import retrieve_documents
+from .services.generation import generate_answer
 
 
 @api_view(["POST"])
@@ -11,9 +11,6 @@ def chat(request):
     if not query:
         return Response({"error": "Query is required."}, status=400)
 
-    results = retrieve_documents(query, k=3)
+    result = generate_answer(query)
 
-    return Response({
-        "query": query,
-        "results": results,
-    })
+    return Response(result)
