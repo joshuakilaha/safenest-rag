@@ -14,7 +14,17 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "safenest-rag.onrender.com",
+]
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -33,8 +43,6 @@ SECRET_KEY = 'django-insecure-^964!3xa3()9rax6*a2prde8j24u=#oxq!9%o35y73akwa&#tv
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
