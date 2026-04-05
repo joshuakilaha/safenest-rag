@@ -12,6 +12,7 @@ CHROMA_DIR = BASE_DIR / "chroma_db"
 
 
 def load_markdown_documents():
+    """Load markdown documents from the specified directory and return them as a list of Document objects."""
     documents = []
 
     for file_path in DOCS_DIR.glob("*.md"):
