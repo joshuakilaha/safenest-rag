@@ -27,3 +27,16 @@ Thumbs.db
 # IDEs
 .vscode/
 .idea/
+
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+.env
+.env.prod
+chroma_db
+staticfiles
+node_modules

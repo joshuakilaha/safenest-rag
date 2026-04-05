@@ -14,23 +14,27 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "safenest-rag.onrender.com",
-]
-
-RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-dev-key")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "41.89.146.3",
+]
+
+extra_hosts = os.getenv("ALLOWED_HOSTS", "")
+if extra_hosts:
+    ALLOWED_HOSTS += [h.strip() for h in extra_hosts.split(",") if h.strip()]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://41.89.146.3",
+]
+
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

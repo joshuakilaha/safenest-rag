@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    container_name: safenest_rag_web
+    restart: unless-stopped
+    env_file:
+      - .env.prod
+    volumes:
+      - chroma_data:/app/chroma_db
+      - static_data:/app/staticfiles
+    expose:
+      - "8000"
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: safenest_rag_nginx
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - static_data:/app/staticfiles:ro
+
+volumes:
+  chroma_data:
+  static_data:
