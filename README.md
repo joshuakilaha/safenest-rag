@@ -32,7 +32,7 @@ The system retrieves relevant information from internal documents and generates 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/safenest-rag.git
+git clone https://github.com/joshuakilaha/safenest-rag.git
 cd safenest-rag
 ```
 
